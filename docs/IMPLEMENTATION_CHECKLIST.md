@@ -6,7 +6,7 @@ Tracking list derived from the masterplan build order.
 - [x] Configure Tailwind CSS and shadcn/ui baseline
 - [x] Integrate Clerk auth (Google login enabled)
 - [x] Connect MongoDB Atlas and add models
-- [ ] Build landing page (`/`)
+- [x] Build landing page (`/`)
 - [ ] Build portfolio builder flow (`/build`, 6 steps)
 - [ ] Add Cloudinary photo upload flow
 - [ ] Add AI polishing pipeline through `lib/claude.js`

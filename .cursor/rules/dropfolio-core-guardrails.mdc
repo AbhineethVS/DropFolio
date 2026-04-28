@@ -1,0 +1,17 @@
+---
+description: DropFolio non-negotiable engineering guardrails
+alwaysApply: true
+---
+
+# DropFolio Core Guardrails
+
+Use `DROPFOLIO_MASTERPLAN.md` as the source of truth for scope and architecture.
+
+- Build one feature per prompt; avoid mixed-scope implementation.
+- Keep all pages mobile responsive by default.
+- Never change `middleware.js` auth behavior unless explicitly asked.
+- Do not alter Mongoose models without explicit user confirmation.
+- Keep `app/p/[slug]/page.jsx` as a server component.
+- Route every Claude request through `lib/claude.js` only.
+- Prefer conservative edits and preserve existing behavior.
+- Do not introduce payments/Pro logic in MVP.

@@ -1,0 +1,19 @@
+---
+description: DropFolio framework and stack conventions
+alwaysApply: true
+---
+
+# Stack Conventions
+
+Tech expectations for implementation:
+
+- Framework: Next.js 15 with App Router.
+- Styling: Tailwind CSS + shadcn/ui patterns.
+- Auth: Clerk with Google login.
+- Database: MongoDB Atlas via Mongoose.
+- AI model access centralized in `lib/claude.js`.
+- File uploads via Cloudinary integration.
+- Resume export via Puppeteer.
+- Deployment target: Vercel.
+
+When creating files, align naming and paths with the masterplan structure.

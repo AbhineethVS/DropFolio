@@ -1,0 +1,17 @@
+You are working on DropFolio.
+
+Project source of truth: `DROPFOLIO_MASTERPLAN.md`.
+Read it before every feature task.
+
+Global constraints:
+- Build one feature at a time.
+- Keep pages mobile responsive.
+- Keep `/p/[slug]` as a server component.
+- Route all Claude API calls through `lib/claude.js` only.
+- Do not modify `middleware.js` auth logic unless explicitly requested.
+- Do not modify MongoDB models without explicit confirmation.
+
+Workflow:
+- Use Next.js 15 App Router conventions.
+- Follow the folder structure from the masterplan.
+- Prefer small, reviewable commits after each working feature.

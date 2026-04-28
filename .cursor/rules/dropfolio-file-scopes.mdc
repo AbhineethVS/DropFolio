@@ -1,0 +1,16 @@
+---
+description: File-scope rules for sensitive DropFolio areas
+globs: "{app/p/[slug]/**,lib/claude.js,middleware.js,models/**/*.js}"
+alwaysApply: false
+---
+
+# Sensitive File Rules
+
+Apply extra caution in these files:
+
+- `app/p/[slug]/**`: keep server-rendered behavior intact.
+- `lib/claude.js`: this is the only Claude integration entrypoint.
+- `middleware.js`: auth flow is protected; change only on explicit request.
+- `models/**/*.js`: schema changes require explicit confirmation.
+
+If asked to change these areas, verify requirement intent before editing.

@@ -1,9 +1,5 @@
 "use client";
 
-const inputClass =
-  "w-full px-4 py-2.5 rounded-lg border border-[#2a2a2a] bg-[#0d0d0d] text-white placeholder-gray-600 text-sm outline-none focus:border-white/40 transition-colors";
-const labelClass = "block text-sm font-medium text-white/80 mb-1.5";
-
 let _hId = 0;
 const newHonorId = () => ++_hId;
 
@@ -36,20 +32,42 @@ export function Honors({ formData, updateFormData }) {
   return (
     <div className="space-y-5">
       <div>
-        <h2 className="text-xl font-semibold text-white">Honors &amp; Awards</h2>
-        <p className="text-sm text-gray-500 mt-1">Recognition you&apos;ve received</p>
+        <h2 className="text-xl font-black" style={{ color: "var(--foreground)" }}>
+          Honors &amp; Awards
+        </h2>
+        <p className="text-sm mt-1 font-medium" style={{ color: "color-mix(in oklch, var(--foreground) 50%, transparent)" }}>
+          Recognition you&apos;ve received
+        </p>
       </div>
 
-      <div className="flex items-start gap-2 px-3 py-2.5 rounded-lg bg-[#161616] border border-[#2a2a2a]">
-        <span className="text-gray-600 text-sm mt-px">💡</span>
-        <p className="text-xs text-gray-500">
+      {/* Tip box */}
+      <div
+        className="flex items-start gap-2 px-3 py-2.5"
+        style={{
+          border: "2px solid var(--border)",
+          borderRadius: "var(--radius-base)",
+          background: "var(--background)",
+        }}
+      >
+        <span className="text-sm mt-px">💡</span>
+        <p className="text-xs font-medium" style={{ color: "color-mix(in oklch, var(--foreground) 55%, transparent)" }}>
           No awards yet? You can skip this step — use the{" "}
-          <span className="text-white/40">&ldquo;Skip this step&rdquo;</span> button below.
+          <span className="font-bold" style={{ color: "var(--foreground)" }}>
+            &ldquo;Skip this step&rdquo;
+          </span>{" "}
+          button below.
         </p>
       </div>
 
       {honors.length === 0 && (
-        <div className="text-center py-6 text-gray-600 text-sm border border-dashed border-[#2a2a2a] rounded-xl">
+        <div
+          className="text-center py-6 text-sm font-semibold"
+          style={{
+            border: "2px dashed var(--border)",
+            borderRadius: "var(--radius-base)",
+            color: "color-mix(in oklch, var(--foreground) 40%, transparent)",
+          }}
+        >
           No honors added yet.
         </div>
       )}
@@ -58,16 +76,26 @@ export function Honors({ formData, updateFormData }) {
         {honors.map((honor, index) => (
           <div
             key={honor.id}
-            className="p-4 rounded-xl border border-[#2a2a2a] bg-[#0a0a0a] space-y-4"
+            className="p-4 space-y-4"
+            style={{
+              border: "2px solid var(--border)",
+              borderRadius: "var(--radius-base)",
+              background: "var(--background)",
+              boxShadow: "var(--shadow)",
+            }}
           >
             <div className="flex items-center justify-between">
-              <span className="text-xs font-medium text-gray-600 uppercase tracking-wider">
+              <span
+                className="text-xs font-black uppercase tracking-wider"
+                style={{ color: "var(--main)" }}
+              >
                 Award {index + 1}
               </span>
               <button
                 type="button"
                 onClick={() => removeHonor(honor.id)}
-                className="text-xs text-gray-600 hover:text-red-400 transition-colors"
+                className="text-xs font-bold hover:text-red-500 transition-colors duration-150"
+                style={{ color: "color-mix(in oklch, var(--foreground) 45%, transparent)" }}
               >
                 Remove
               </button>
@@ -75,75 +103,77 @@ export function Honors({ formData, updateFormData }) {
 
             {/* Title */}
             <div>
-              <label className={labelClass}>
-                Title <span className="text-red-400">*</span>
+              <label className="nb-label">
+                Title <span className="text-red-500">*</span>
               </label>
               <input
                 type="text"
                 value={honor.title}
                 onChange={(e) => updateHonor(honor.id, { title: e.target.value })}
                 placeholder="e.g. Smart India Hackathon Finalist"
-                className={inputClass}
+                className="nb-input"
               />
             </div>
 
             {/* Org + Year */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <label className={labelClass}>
-                  Issuing organization <span className="text-red-400">*</span>
+                <label className="nb-label">
+                  Issuing organization <span className="text-red-500">*</span>
                 </label>
                 <input
                   type="text"
                   value={honor.org}
                   onChange={(e) => updateHonor(honor.id, { org: e.target.value })}
                   placeholder="e.g. Ministry of Education, Google"
-                  className={inputClass}
+                  className="nb-input"
                 />
               </div>
               <div>
-                <label className={labelClass}>
-                  Year <span className="text-red-400">*</span>
+                <label className="nb-label">
+                  Year <span className="text-red-500">*</span>
                 </label>
                 <input
                   type="text"
                   value={honor.year}
                   onChange={(e) => updateHonor(honor.id, { year: e.target.value })}
                   placeholder="e.g. 2024"
-                  className={inputClass}
+                  className="nb-input"
                 />
               </div>
             </div>
 
             {/* Short description */}
             <div>
-              <label className={labelClass}>
+              <label className="nb-label">
                 Short description{" "}
-                <span className="text-gray-600 font-normal">(optional)</span>
+                <span className="font-medium" style={{ color: "color-mix(in oklch, var(--foreground) 45%, transparent)" }}>
+                  (optional)
+                </span>
               </label>
               <input
                 type="text"
                 value={honor.description}
-                onChange={(e) =>
-                  updateHonor(honor.id, { description: e.target.value })
-                }
+                onChange={(e) => updateHonor(honor.id, { description: e.target.value })}
                 placeholder="One line about what this was"
-                className={inputClass}
+                className="nb-input"
               />
             </div>
 
             {/* Certificate link */}
             <div>
-              <label className={labelClass}>
+              <label className="nb-label">
                 Certificate / link{" "}
-                <span className="text-gray-600 font-normal">(optional)</span>
+                <span className="font-medium" style={{ color: "color-mix(in oklch, var(--foreground) 45%, transparent)" }}>
+                  (optional)
+                </span>
               </label>
               <input
                 type="url"
                 value={honor.link}
                 onChange={(e) => updateHonor(honor.id, { link: e.target.value })}
                 placeholder="https://…"
-                className={inputClass}
+                className="nb-input"
               />
             </div>
           </div>
@@ -153,7 +183,7 @@ export function Honors({ formData, updateFormData }) {
       <button
         type="button"
         onClick={addHonor}
-        className="w-full py-3 text-sm text-gray-500 border border-dashed border-[#2a2a2a] rounded-xl hover:border-white/30 hover:text-white transition-colors"
+        className="nb-btn-dashed w-full py-3"
       >
         + {honors.length === 0 ? "Add an honor or award" : "Add another"}
       </button>

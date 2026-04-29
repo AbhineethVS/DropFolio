@@ -15,37 +15,38 @@ export function DashboardNavbar() {
 
   return (
     <header
-      className="w-full bg-secondary-background sticky top-0 z-50"
-      style={{ borderBottom: "2px solid var(--border)" }}
+      className="fixed top-6 left-1/2 -translate-x-1/2 z-20
+                 flex items-center justify-between
+                 pl-6 pr-4 py-3 backdrop-blur-sm rounded-full
+                 border border-[#333] bg-[#1f1f1f57]
+                 w-[calc(100%-2rem)] sm:w-auto gap-x-8"
     >
-      <div className="max-w-5xl mx-auto px-4 md:px-6 h-16 flex items-center justify-between gap-4">
-        {/* Logo */}
-        <Link href="/" className="flex items-center gap-2.5 shrink-0">
-          <div
-            className="w-8 h-8 flex items-center justify-center rounded-[6px] shrink-0"
-            style={{
-              background: "var(--main)",
-              border: "2px solid var(--border)",
-              boxShadow: "2px 2px 0px var(--border)",
-            }}
-          >
-            <span className="font-black text-black text-sm leading-none">D</span>
-          </div>
-          <span className="font-black text-foreground text-base tracking-widest uppercase">
-            DROPFOLIO
-          </span>
-        </Link>
+      {/* Logo */}
+      <Link href="/" className="flex items-center gap-2 flex-shrink-0">
+        <div className="relative w-5 h-5 flex items-center justify-center">
+          <span className="absolute w-1.5 h-1.5 rounded-full bg-gray-200 top-0 left-1/2 -translate-x-1/2 opacity-80" />
+          <span className="absolute w-1.5 h-1.5 rounded-full bg-gray-200 left-0 top-1/2 -translate-y-1/2 opacity-80" />
+          <span className="absolute w-1.5 h-1.5 rounded-full bg-gray-200 right-0 top-1/2 -translate-y-1/2 opacity-80" />
+          <span className="absolute w-1.5 h-1.5 rounded-full bg-gray-200 bottom-0 left-1/2 -translate-x-1/2 opacity-80" />
+        </div>
+        <span className="text-white font-semibold text-sm tracking-wider">DROPFOLIO</span>
+      </Link>
 
-        {/* Nav actions */}
-        <nav className="flex items-center gap-3">
-          <Link href="/dashboard" className="nb-btn-secondary px-4 py-2">
-            Dashboard
-          </Link>
-          <button onClick={handleSignOut} className="nb-btn-primary px-4 py-2">
-            Log Out
-          </button>
-        </nav>
-      </div>
+      {/* Nav items */}
+      <nav className="flex items-center gap-3">
+        <Link
+          href="/dashboard"
+          className="text-sm text-gray-300 hover:text-white transition-colors duration-200"
+        >
+          Dashboard
+        </Link>
+        <button
+          onClick={handleSignOut}
+          className="px-4 py-2 text-xs sm:text-sm border border-[#333] bg-[rgba(31,31,31,0.62)] text-gray-300 rounded-full hover:border-white/50 hover:text-white transition-colors duration-200"
+        >
+          Log Out
+        </button>
+      </nav>
     </header>
   );
 }

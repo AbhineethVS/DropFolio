@@ -6,7 +6,7 @@ export const metadata = {
 
 export default function BuildPage() {
   return (
-    <main className="pt-10 pb-20 px-4">
+    <main className="pt-28 pb-20 px-4">
       <BuilderShell />
     </main>
   );

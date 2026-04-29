@@ -59,57 +59,26 @@ export function Review({ formData }) {
   ].filter((s) => s.items.length > 0);
 
   return (
-    <div
-      className="p-5 space-y-5"
-      style={{
-        border: "2px solid var(--border)",
-        borderRadius: "var(--radius-base)",
-        background: "var(--background)",
-        boxShadow: "var(--shadow)",
-      }}
-    >
-      <div className="flex items-center gap-2 flex-wrap">
-        <h3 className="text-sm font-black" style={{ color: "var(--foreground)" }}>
-          Review summary
-        </h3>
-        <span
-          className="text-xs font-medium"
-          style={{ color: "color-mix(in oklch, var(--foreground) 45%, transparent)" }}
-        >
-          — double-check before submitting
-        </span>
+    <div className="rounded-xl border border-[#2a2a2a] bg-[#0d0d0d] p-5 space-y-5">
+      <div className="flex items-center gap-2">
+        <h3 className="text-sm font-medium text-white/70">Review summary</h3>
+        <span className="text-xs text-gray-600">— double-check before submitting</span>
       </div>
 
       {sections.length === 0 ? (
-        <p
-          className="text-xs font-medium"
-          style={{ color: "color-mix(in oklch, var(--foreground) 40%, transparent)" }}
-        >
-          Nothing to preview yet.
-        </p>
+        <p className="text-xs text-gray-600">Nothing to preview yet.</p>
       ) : (
         sections.map((section) => (
           <div key={section.title} className="space-y-2">
-            <p
-              className="text-[10px] font-black uppercase tracking-widest"
-              style={{ color: "var(--main)" }}
-            >
+            <p className="text-[10px] font-semibold text-gray-600 uppercase tracking-widest">
               {section.title}
             </p>
             {section.items.map((item) => (
               <div key={item.label} className="flex items-start gap-3 text-xs">
-                <span
-                  className="min-w-[88px] flex-shrink-0 pt-px font-semibold"
-                  style={{ color: "color-mix(in oklch, var(--foreground) 50%, transparent)" }}
-                >
+                <span className="text-gray-600 min-w-[88px] flex-shrink-0 pt-px">
                   {item.label}
                 </span>
-                <span
-                  className="font-medium break-all leading-relaxed"
-                  style={{ color: "var(--foreground)" }}
-                >
-                  {item.value}
-                </span>
+                <span className="text-white/60 break-all leading-relaxed">{item.value}</span>
               </div>
             ))}
           </div>

@@ -3,6 +3,10 @@
 import { useState } from "react";
 import { TagInput } from "../TagInput";
 
+const inputClass =
+  "w-full px-4 py-2.5 rounded-lg border border-[#2a2a2a] bg-[#0d0d0d] text-white placeholder-gray-600 text-sm outline-none focus:border-white/40 transition-colors";
+const labelClass = "block text-sm font-medium text-white/80 mb-1.5";
+
 let _idCounter = 0;
 const newId = () => ++_idCounter;
 
@@ -42,23 +46,12 @@ export function Projects({ formData, updateFormData }) {
   return (
     <div className="space-y-5">
       <div>
-        <h2 className="text-xl font-black" style={{ color: "var(--foreground)" }}>
-          Projects
-        </h2>
-        <p className="text-sm mt-1 font-medium" style={{ color: "color-mix(in oklch, var(--foreground) 50%, transparent)" }}>
-          Things you&apos;ve built — up to 6
-        </p>
+        <h2 className="text-xl font-semibold text-white">Projects</h2>
+        <p className="text-sm text-gray-500 mt-1">Things you&apos;ve built — up to 6</p>
       </div>
 
       {projects.length === 0 && (
-        <div
-          className="text-center py-8 text-sm font-semibold"
-          style={{
-            border: "2px dashed var(--border)",
-            borderRadius: "var(--radius-base)",
-            color: "color-mix(in oklch, var(--foreground) 40%, transparent)",
-          }}
-        >
+        <div className="text-center py-8 text-gray-600 text-sm border border-dashed border-[#2a2a2a] rounded-xl">
           No projects yet — add your first one below.
         </div>
       )}
@@ -67,45 +60,22 @@ export function Projects({ formData, updateFormData }) {
         {projects.map((project, index) => (
           <div
             key={project.id}
-            style={{
-              border: "2px solid var(--border)",
-              borderRadius: "var(--radius-base)",
-              boxShadow: expandedId === project.id ? "var(--shadow-lg)" : "var(--shadow)",
-              background: "var(--secondary-background)",
-              transition: "box-shadow 150ms ease",
-              overflow: "hidden",
-            }}
+            className="border border-[#2a2a2a] rounded-xl overflow-hidden"
           >
             {/* Header row */}
             <div
-              className="flex items-center justify-between px-4 py-3 cursor-pointer transition-colors duration-150"
-              style={{ background: expandedId === project.id ? "var(--background)" : "transparent" }}
+              className="flex items-center justify-between px-4 py-3 cursor-pointer hover:bg-white/[0.03] transition-colors"
               onClick={() => toggle(project.id)}
             >
               <div className="flex items-center gap-3 min-w-0">
-                <span
-                  className="w-6 h-6 rounded-full flex items-center justify-center text-xs font-black flex-shrink-0"
-                  style={{
-                    background: "var(--main)",
-                    border: "2px solid var(--border)",
-                    color: "var(--main-foreground)",
-                  }}
-                >
+                <span className="w-6 h-6 rounded-full bg-[#1e1e1e] border border-[#333] flex items-center justify-center text-xs text-gray-500 flex-shrink-0">
                   {index + 1}
                 </span>
-                <span className="text-sm font-bold truncate" style={{ color: "var(--foreground)" }}>
+                <span className="text-sm font-medium text-white/80 truncate">
                   {project.name || `Project ${index + 1}`}
                 </span>
                 {project.featured && (
-                  <span
-                    className="text-[10px] px-2 py-0.5 font-bold flex-shrink-0"
-                    style={{
-                      background: "var(--main)",
-                      border: "2px solid var(--border)",
-                      borderRadius: "4px",
-                      color: "var(--main-foreground)",
-                    }}
-                  >
+                  <span className="text-[10px] px-2 py-0.5 rounded-full bg-white/10 text-white/40 flex-shrink-0">
                     Pinned
                   </span>
                 )}
@@ -117,15 +87,11 @@ export function Projects({ formData, updateFormData }) {
                     e.stopPropagation();
                     removeProject(project.id);
                   }}
-                  className="text-xs font-bold hover:text-red-500 transition-colors duration-150"
-                  style={{ color: "color-mix(in oklch, var(--foreground) 45%, transparent)" }}
+                  className="text-xs text-gray-600 hover:text-red-400 transition-colors"
                 >
                   Remove
                 </button>
-                <span
-                  className="text-xs font-bold"
-                  style={{ color: "color-mix(in oklch, var(--foreground) 50%, transparent)" }}
-                >
+                <span className="text-gray-600 text-xs">
                   {expandedId === project.id ? "▲" : "▼"}
                 </span>
               </div>
@@ -133,52 +99,52 @@ export function Projects({ formData, updateFormData }) {
 
             {/* Expanded form */}
             {expandedId === project.id && (
-              <div
-                className="px-4 pb-5 pt-4 space-y-4"
-                style={{ borderTop: "2px solid var(--border)", background: "var(--background)" }}
-              >
+              <div className="px-4 pb-5 pt-4 space-y-4 border-t border-[#1e1e1e] bg-[#0a0a0a]">
                 {/* Project name */}
                 <div>
-                  <label className="nb-label">
-                    Project name <span className="text-red-500">*</span>
+                  <label className={labelClass}>
+                    Project name <span className="text-red-400">*</span>
                   </label>
                   <input
                     type="text"
                     value={project.name}
-                    onChange={(e) => updateProject(project.id, { name: e.target.value })}
+                    onChange={(e) =>
+                      updateProject(project.id, { name: e.target.value })
+                    }
                     placeholder="e.g. AI Resume Builder"
-                    className="nb-input"
+                    className={inputClass}
                   />
                 </div>
 
                 {/* Description */}
                 <div>
-                  <label className="nb-label">
-                    Description <span className="text-red-500">*</span>
+                  <label className={labelClass}>
+                    Description <span className="text-red-400">*</span>
                   </label>
                   <textarea
                     value={project.description}
-                    onChange={(e) => updateProject(project.id, { description: e.target.value })}
+                    onChange={(e) =>
+                      updateProject(project.id, { description: e.target.value })
+                    }
                     rows={3}
                     placeholder="Describe what you built and why. What problem does it solve?"
-                    className="nb-input resize-none"
+                    className={`${inputClass} resize-none`}
                   />
-                  <p
-                    className="mt-1 text-xs font-medium"
-                    style={{ color: "color-mix(in oklch, var(--foreground) 45%, transparent)" }}
-                  >
+                  <p className="mt-1 text-xs text-gray-600">
                     AI will make this sound impressive.
                   </p>
                 </div>
 
                 {/* Tech stack */}
                 <div>
-                  <label className="nb-label">
-                    Tech stack <span className="text-red-500">*</span>
+                  <label className={labelClass}>
+                    Tech stack <span className="text-red-400">*</span>
                   </label>
                   <TagInput
                     tags={project.techStack}
-                    onChange={(techStack) => updateProject(project.id, { techStack })}
+                    onChange={(techStack) =>
+                      updateProject(project.id, { techStack })
+                    }
                     placeholder="e.g. React, Node.js, MongoDB…"
                   />
                 </div>
@@ -186,33 +152,33 @@ export function Projects({ formData, updateFormData }) {
                 {/* Links */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
-                    <label className="nb-label">
+                    <label className={labelClass}>
                       GitHub link{" "}
-                      <span className="font-medium" style={{ color: "color-mix(in oklch, var(--foreground) 45%, transparent)" }}>
-                        (optional)
-                      </span>
+                      <span className="text-gray-600 font-normal">(optional)</span>
                     </label>
                     <input
                       type="url"
                       value={project.githubLink}
-                      onChange={(e) => updateProject(project.id, { githubLink: e.target.value })}
+                      onChange={(e) =>
+                        updateProject(project.id, { githubLink: e.target.value })
+                      }
                       placeholder="https://github.com/…"
-                      className="nb-input"
+                      className={inputClass}
                     />
                   </div>
                   <div>
-                    <label className="nb-label">
+                    <label className={labelClass}>
                       Live link{" "}
-                      <span className="font-medium" style={{ color: "color-mix(in oklch, var(--foreground) 45%, transparent)" }}>
-                        (optional)
-                      </span>
+                      <span className="text-gray-600 font-normal">(optional)</span>
                     </label>
                     <input
                       type="url"
                       value={project.liveLink}
-                      onChange={(e) => updateProject(project.id, { liveLink: e.target.value })}
+                      onChange={(e) =>
+                        updateProject(project.id, { liveLink: e.target.value })
+                      }
                       placeholder="https://…"
-                      className="nb-input"
+                      className={inputClass}
                     />
                   </div>
                 </div>
@@ -223,25 +189,20 @@ export function Projects({ formData, updateFormData }) {
                     type="button"
                     role="switch"
                     aria-checked={project.featured}
-                    onClick={() => updateProject(project.id, { featured: !project.featured })}
-                    className="w-9 h-5 rounded-full transition-colors duration-200 relative flex-shrink-0"
-                    style={{
-                      background: project.featured ? "var(--main)" : "color-mix(in oklch, var(--foreground) 20%, transparent)",
-                      border: "2px solid var(--border)",
-                    }}
+                    onClick={() =>
+                      updateProject(project.id, { featured: !project.featured })
+                    }
+                    className={`w-9 h-5 rounded-full transition-colors duration-200 relative flex-shrink-0 ${
+                      project.featured ? "bg-white" : "bg-[#333]"
+                    }`}
                   >
                     <span
-                      className="absolute top-0.5 left-0.5 w-3.5 h-3.5 rounded-full transition-transform duration-200"
-                      style={{
-                        background: "var(--foreground)",
-                        transform: project.featured ? "translateX(16px)" : "translateX(0)",
-                      }}
+                      className={`absolute top-0.5 left-0.5 w-4 h-4 rounded-full bg-black transition-transform duration-200 ${
+                        project.featured ? "translate-x-4" : "translate-x-0"
+                      }`}
                     />
                   </button>
-                  <label
-                    className="text-sm font-medium cursor-default"
-                    style={{ color: "color-mix(in oklch, var(--foreground) 65%, transparent)" }}
-                  >
+                  <label className="text-sm text-white/60 cursor-default">
                     Pin this project to the top of my portfolio
                   </label>
                 </div>
@@ -256,7 +217,7 @@ export function Projects({ formData, updateFormData }) {
         type="button"
         onClick={addProject}
         disabled={projects.length >= 6}
-        className="nb-btn-dashed w-full py-3"
+        className="w-full py-3 text-sm text-gray-500 border border-dashed border-[#2a2a2a] rounded-xl hover:border-white/30 hover:text-white disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
       >
         {projects.length >= 6
           ? "Maximum 6 projects reached"

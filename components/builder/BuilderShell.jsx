@@ -51,51 +51,6 @@ const initialFormData = {
   customLinkUrl: "",
 };
 
-function LoadingOverlay() {
-  return (
-    <div
-      className="max-w-2xl mx-auto"
-      style={{ padding: "2rem" }}
-    >
-      <div
-        className="nb-card flex flex-col items-center justify-center gap-6 py-20 px-8 text-center"
-      >
-        {/* Bouncing dots */}
-        <div className="flex items-center gap-2">
-          {[0, 1, 2].map((i) => (
-            <span
-              key={i}
-              className="w-3 h-3 rounded-full"
-              style={{
-                background: "var(--main)",
-                border: "2px solid var(--border)",
-                animation: `bounce 0.8s ease-in-out ${i * 0.15}s infinite`,
-              }}
-            />
-          ))}
-        </div>
-        <div>
-          <p className="font-black text-lg" style={{ color: "var(--foreground)" }}>
-            AI is polishing your portfolio…
-          </p>
-          <p
-            className="text-sm mt-1.5 font-medium"
-            style={{ color: "color-mix(in oklch, var(--foreground) 50%, transparent)" }}
-          >
-            Claude is rewriting your content into professional copy.
-          </p>
-        </div>
-        <style>{`
-          @keyframes bounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
-          }
-        `}</style>
-      </div>
-    </div>
-  );
-}
-
 export function BuilderShell() {
   const { user } = useUser();
   const router = useRouter();
@@ -143,7 +98,12 @@ export function BuilderShell() {
   };
 
   if (isSubmitting) {
-    return <LoadingOverlay />;
+    return (
+      <div className="max-w-2xl mx-auto flex flex-col items-center justify-center min-h-[60vh] gap-6">
+        <div className="w-12 h-12 border-2 border-white/20 border-t-white rounded-full animate-spin" />
+        <p className="text-white/60 text-lg tracking-wide">AI is polishing your portfolio…</p>
+      </div>
+    );
   }
 
   return (
@@ -152,16 +112,16 @@ export function BuilderShell() {
       <StepIndicator currentStep={currentStep} />
 
       {/* Form card */}
-      <div className="nb-card mt-8 p-6 sm:p-8">
+      <div className="mt-8 rounded-2xl border border-[#2a2a2a] bg-[#111111] p-6 sm:p-8">
         {stepComponents[currentStep]}
       </div>
 
       {/* Navigation */}
-      <div className="mt-6 flex items-center justify-between gap-3">
+      <div className="mt-6 flex items-center justify-between">
         <button
           onClick={handleBack}
           disabled={currentStep === 1}
-          className="nb-btn-secondary px-6 py-2.5"
+          className="px-6 py-2.5 text-sm rounded-full border border-[#333] text-gray-400 hover:text-white hover:border-white/40 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
         >
           ← Back
         </button>
@@ -170,7 +130,7 @@ export function BuilderShell() {
           {currentStep === 5 && (
             <button
               onClick={handleSkip}
-              className="nb-btn-dashed px-5 py-2.5"
+              className="px-5 py-2.5 text-sm rounded-full border border-[#333] text-gray-500 hover:text-white hover:border-white/40 transition-colors"
             >
               Skip this step
             </button>
@@ -179,15 +139,14 @@ export function BuilderShell() {
           {currentStep < 6 ? (
             <button
               onClick={handleNext}
-              className="nb-btn-primary px-7 py-2.5"
+              className="px-7 py-2.5 text-sm font-medium rounded-full bg-white text-black hover:bg-white/90 active:scale-95 transition-all duration-150"
             >
               Next →
             </button>
           ) : (
             <button
               onClick={handleSubmit}
-              className="nb-btn-primary py-3 px-8 text-base"
-              style={{ boxShadow: "4px 4px 0px var(--border)" }}
+              className="px-8 py-2.5 text-sm font-semibold rounded-full bg-white text-black hover:bg-white/90 active:scale-95 transition-all duration-150"
             >
               Generate my portfolio →
             </button>

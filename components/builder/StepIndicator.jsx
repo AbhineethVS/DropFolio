@@ -20,21 +20,14 @@ export function StepIndicator({ currentStep }) {
               {/* Circle + label */}
               <div className="flex flex-col items-center flex-shrink-0">
                 <div
-                  className="w-8 h-8 rounded-full flex items-center justify-center text-xs font-black transition-all duration-150"
-                  style={{
-                    border: "2px solid var(--border)",
-                    background: isCompleted
-                      ? "var(--foreground)"
-                      : isCurrent
-                      ? "var(--main)"
-                      : "var(--secondary-background)",
-                    color: isCompleted
-                      ? "var(--background)"
-                      : isCurrent
-                      ? "var(--main-foreground)"
-                      : "color-mix(in oklch, var(--foreground) 40%, transparent)",
-                    boxShadow: isCurrent ? "var(--shadow)" : "none",
-                  }}
+                  className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-medium transition-all duration-200
+                    ${
+                      isCompleted
+                        ? "bg-white text-black"
+                        : isCurrent
+                        ? "border-2 border-white text-white"
+                        : "border border-[#333] text-gray-600"
+                    }`}
                 >
                   {isCompleted ? (
                     <svg
@@ -42,7 +35,7 @@ export function StepIndicator({ currentStep }) {
                       fill="none"
                       viewBox="0 0 24 24"
                       stroke="currentColor"
-                      strokeWidth={3}
+                      strokeWidth={2.5}
                     >
                       <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
                     </svg>
@@ -51,12 +44,8 @@ export function StepIndicator({ currentStep }) {
                   )}
                 </div>
                 <span
-                  className="mt-1.5 text-[10px] hidden sm:block text-center max-w-[64px] leading-tight font-semibold"
-                  style={{
-                    color: isCurrent
-                      ? "var(--foreground)"
-                      : "color-mix(in oklch, var(--foreground) 40%, transparent)",
-                  }}
+                  className={`mt-1.5 text-[10px] hidden sm:block text-center max-w-[64px] leading-tight
+                    ${isCurrent ? "text-white" : "text-gray-600"}`}
                 >
                   {step.title}
                 </span>
@@ -65,12 +54,8 @@ export function StepIndicator({ currentStep }) {
               {/* Connector line */}
               {index < STEPS.length - 1 && (
                 <div
-                  className="flex-1 mx-1.5 mt-[-10px] sm:mt-[-16px] transition-all duration-200"
-                  style={{
-                    height: "2px",
-                    background: isCompleted ? "var(--foreground)" : "var(--border)",
-                    opacity: isCompleted ? 1 : 0.25,
-                  }}
+                  className={`h-px flex-1 mx-1.5 mt-[-10px] sm:mt-[-16px] transition-colors duration-200
+                    ${isCompleted ? "bg-white/30" : "bg-[#2a2a2a]"}`}
                 />
               )}
             </div>

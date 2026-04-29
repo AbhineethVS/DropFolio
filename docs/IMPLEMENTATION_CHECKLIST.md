@@ -7,7 +7,7 @@ Tracking list derived from the masterplan build order.
 - [x] Integrate Clerk auth (Google login enabled)
 - [x] Connect MongoDB Atlas and add models
 - [x] Build landing page (`/`)
-- [ ] Build portfolio builder flow (`/build`, 6 steps)
+- [x] Build portfolio builder flow (`/build`, 6 steps)
 - [ ] Add Cloudinary photo upload flow
 - [ ] Add AI polishing pipeline through `lib/claude.js`
 - [ ] Persist raw + polished data to MongoDB

@@ -1,3 +1,13 @@
+import { BuilderShell } from "@/components/builder/BuilderShell";
+
+export const metadata = {
+  title: "Build your portfolio — DropFolio",
+};
+
 export default function BuildPage() {
-  return <main className="p-6">Portfolio builder scaffold.</main>;
+  return (
+    <main className="pt-28 pb-20 px-4">
+      <BuilderShell />
+    </main>
+  );
 }

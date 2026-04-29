@@ -1,10 +1,14 @@
 import "./globals.css";
-import { Geist, Inter } from "next/font/google";
+import { Space_Grotesk } from "next/font/google";
 import { cn } from "@/lib/utils";
 import { ClerkProvider } from "@clerk/nextjs";
+import { ThemeProvider } from "next-themes";
 
-const geist = Geist({ subsets: ["latin"], variable: "--font-heading" });
-const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
+const spaceGrotesk = Space_Grotesk({
+  subsets: ["latin"],
+  variable: "--font-space-grotesk",
+  weight: ["300", "400", "500", "600", "700"],
+});
 
 export const metadata = {
   title: "DropFolio",
@@ -13,9 +17,13 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className={cn(geist.variable, inter.variable)}>
-      <body>
-        <ClerkProvider>{children}</ClerkProvider>
+    <html lang="en" className={cn(spaceGrotesk.variable)} suppressHydrationWarning>
+      <body className={spaceGrotesk.className}>
+        <ClerkProvider>
+          <ThemeProvider attribute="class" defaultTheme="light" enableSystem={false}>
+            {children}
+          </ThemeProvider>
+        </ClerkProvider>
       </body>
     </html>
   );

@@ -1,44 +1,51 @@
-import { Zap, Palette, Share2 } from "lucide-react";
+import { Zap, Sparkles, Link2 } from "lucide-react";
 
 const features = [
   {
     icon: Zap,
     title: "Launch in minutes",
-    description: "Pick a template, add your work, go live. No code required.",
+    description: "Pick a template, add your work, go live. No code or design skills required.",
+    rotate: "-rotate-1",
   },
   {
-    icon: Palette,
-    title: "Fully customizable",
-    description: "Fonts, colors, layouts — make it yours from top to bottom.",
+    icon: Sparkles,
+    title: "AI writes the copy",
+    description: "Claude AI turns your rough notes into polished, recruiter-ready content.",
+    rotate: "rotate-0",
   },
   {
-    icon: Share2,
-    title: "One link, anywhere",
-    description: "Share your portfolio with a single clean link. Works everywhere.",
+    icon: Link2,
+    title: "One link, everywhere",
+    description: "Share your portfolio with a single clean URL. Works on any device.",
+    rotate: "rotate-1",
   },
 ];
 
 export function FeaturesSection() {
   return (
-    <section id="features" className="py-24 w-full px-4 md:px-6">
+    <section id="features" className="py-20 w-full px-4 md:px-6">
       <div className="max-w-7xl mx-auto">
-        <div className="text-center mb-16">
-          <h2 className="font-heading text-4xl md:text-5xl font-medium text-white tracking-tight">
-            Everything you need to stand out
-          </h2>
-        </div>
+        <h2 className="text-3xl md:text-[36px] font-black text-black dark:text-white text-center mb-14">
+          Everything you need to stand out
+        </h2>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {features.map(({ icon: Icon, title, description }) => (
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {features.map(({ icon: Icon, title, description, rotate }) => (
             <div
               key={title}
-              className="bg-[#111111] border border-[#222222] rounded-2xl p-6 flex flex-col gap-4 transition-colors duration-200 hover:border-[#333333]"
+              className={`${rotate} bg-white dark:bg-[#1a1a1a] p-7 rounded-[var(--nb-radius)] border-2 border-black dark:border-white transition-all duration-150 hover:rotate-0 hover:-translate-y-1 hover:-translate-x-0.5 group cursor-default`}
+              style={{ boxShadow: "var(--nb-shadow)" }}
             >
-              <div className="w-10 h-10 flex items-center justify-center rounded-xl bg-white/5 border border-white/10">
-                <Icon className="w-5 h-5 text-white/70" />
+              <div
+                className="w-11 h-11 flex items-center justify-center rounded-[var(--nb-radius)] bg-[#34d399] border-2 border-black mb-5"
+                style={{ boxShadow: "2px 2px 0px #000" }}
+              >
+                <Icon className="w-5 h-5 text-black" />
               </div>
-              <h3 className="font-heading text-lg font-semibold text-white">{title}</h3>
-              <p className="text-[#a1a1a1] text-sm leading-relaxed">{description}</p>
+              <h3 className="text-lg font-black text-black dark:text-white mb-2">{title}</h3>
+              <p className="text-sm font-medium text-black/60 dark:text-white/60 leading-relaxed">
+                {description}
+              </p>
             </div>
           ))}
         </div>

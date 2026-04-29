@@ -1,20 +1,22 @@
-import { Navbar } from "@/components/ui/mini-navbar";
-import { HeroSection } from "@/components/ui/hero-section";
+import { Navbar } from "@/components/landing/Navbar";
+import { Hero } from "@/components/landing/Hero";
 import { FeaturesSection } from "@/components/landing/FeaturesSection";
+import { HowItWorks } from "@/components/landing/HowItWorks";
 import { ExamplesSection } from "@/components/landing/ExamplesSection";
+import { CTABanner } from "@/components/landing/CTABanner";
 import { Footer } from "@/components/landing/Footer";
 
 export default function LandingPage() {
   return (
-    <div className="relative min-h-screen bg-[#0a0a0a] text-white font-sans">
+    <div className="min-h-screen bg-white dark:bg-[#0f0f0f]">
       <Navbar />
-
-      <main className="pt-28">
-        <HeroSection />
+      <main>
+        <Hero />
         <FeaturesSection />
+        <HowItWorks />
         <ExamplesSection />
+        <CTABanner />
       </main>
-
       <Footer />
     </div>
   );

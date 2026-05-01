@@ -8,7 +8,7 @@ Tracking list derived from the masterplan build order.
 - [x] Connect MongoDB Atlas and add models
 - [x] Build landing page (`/`)
 - [x] Build portfolio builder flow (`/build`, 6 steps)
-- [ ] Add Cloudinary photo upload flow
+- [x] Add Cloudinary photo upload flow
 - [ ] Add AI polishing pipeline through `lib/claude.js`
 - [ ] Persist raw + polished data to MongoDB
 - [ ] Build public portfolio route (`/p/[slug]`) as server component

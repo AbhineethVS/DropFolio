@@ -1,13 +1,26 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useState } from "react";
 
 const inputClass =
   "w-full px-4 py-2.5 rounded-lg border border-[#333] bg-[#1a1a1a] text-white placeholder-gray-600 text-sm outline-none focus:border-white/40 transition-colors";
 const labelClass = "block text-sm font-medium text-white/80 mb-1.5";
+const MAX_IMAGE_SIZE_BYTES = 5 * 1024 * 1024;
+const ACCEPTED_IMAGE_TYPES = new Set(["image/jpeg", "image/png", "image/webp"]);
+
+function readFileAsDataUrl(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onloadend = () => resolve(reader.result);
+    reader.onerror = () => reject(new Error("Could not read the selected image."));
+    reader.readAsDataURL(file);
+  });
+}
 
 export function PersonalInfo({ formData, updateFormData }) {
   const fileInputRef = useRef(null);
+  const [isUploadingPhoto, setIsUploadingPhoto] = useState(false);
+  const [photoError, setPhotoError] = useState("");
 
   const handleSlugChange = (e) => {
     const raw = e.target.value
@@ -17,14 +30,62 @@ export function PersonalInfo({ formData, updateFormData }) {
     updateFormData({ slug: raw });
   };
 
-  const handlePhotoChange = (e) => {
+  const handlePhotoChange = async (e) => {
     const file = e.target.files?.[0];
     if (!file) return;
-    const reader = new FileReader();
-    reader.onloadend = () => {
-      updateFormData({ photo: file, photoPreview: reader.result });
-    };
-    reader.readAsDataURL(file);
+
+    setPhotoError("");
+
+    if (!ACCEPTED_IMAGE_TYPES.has(file.type)) {
+      setPhotoError("Unsupported image type. Use JPG, PNG, or WEBP.");
+      return;
+    }
+
+    if (file.size > MAX_IMAGE_SIZE_BYTES) {
+      setPhotoError("Image is too large. Max allowed size is 5 MB.");
+      return;
+    }
+
+    try {
+      const preview = await readFileAsDataUrl(file);
+
+      updateFormData({
+        photo: file,
+        photoPreview: preview,
+        photoUrl: "",
+        photoPublicId: "",
+      });
+
+      setIsUploadingPhoto(true);
+
+      const body = new FormData();
+      body.append("file", file);
+
+      const response = await fetch("/api/upload", {
+        method: "POST",
+        body,
+      });
+
+      const result = await response.json();
+
+      if (!response.ok || !result?.ok) {
+        throw new Error(result?.error || "Failed to upload image.");
+      }
+
+      updateFormData({
+        photoUrl: result.data.url,
+        photoPublicId: result.data.publicId,
+      });
+    } catch (error) {
+      setPhotoError(error.message || "Failed to upload image. Please try again.");
+      updateFormData({
+        photoUrl: "",
+        photoPublicId: "",
+      });
+    } finally {
+      setIsUploadingPhoto(false);
+      if (fileInputRef.current) fileInputRef.current.value = "";
+    }
   };
 
   return (
@@ -123,11 +184,20 @@ export function PersonalInfo({ formData, updateFormData }) {
             <button
               type="button"
               onClick={() => fileInputRef.current?.click()}
+              disabled={isUploadingPhoto}
               className="px-4 py-2 text-xs rounded-full border border-[#333] text-gray-400 hover:text-white hover:border-white/40 transition-colors"
             >
-              {formData.photoPreview ? "Change photo" : "Upload photo"}
+              {isUploadingPhoto
+                ? "Uploading..."
+                : formData.photoPreview
+                  ? "Change photo"
+                  : "Upload photo"}
             </button>
-            <p className="mt-1.5 text-xs text-gray-600">JPG, PNG or WEBP — max 5 MB</p>
+            <p className="mt-1.5 text-xs text-gray-600">JPG, PNG or WEBP - max 5 MB</p>
+            {formData.photoUrl && !isUploadingPhoto && (
+              <p className="mt-1 text-xs text-emerald-400">Photo uploaded successfully.</p>
+            )}
+            {photoError && <p className="mt-1 text-xs text-red-400">{photoError}</p>}
           </div>
         </div>
         <input

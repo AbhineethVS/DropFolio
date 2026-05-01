@@ -20,6 +20,8 @@ const initialFormData = {
   bio: "",
   photo: null,
   photoPreview: "",
+  photoUrl: "",
+  photoPublicId: "",
   location: "",
   openToWork: false,
 

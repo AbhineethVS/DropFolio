@@ -102,11 +102,38 @@ export function BuilderShell() {
         throw new Error(result?.error || "Failed to polish portfolio data.");
       }
 
+      const saveResponse = await fetch("/api/portfolio/create", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: rawData.fullName,
+          email: rawData.email,
+          slug: rawData.slug,
+          photoUrl: rawData.photoUrl,
+          rawData,
+          aiPolishedData: result.data.polishedData,
+        }),
+      });
+
+      const saveResult = await saveResponse.json();
+
+      if (!saveResponse.ok || !saveResult?.ok) {
+        throw new Error(saveResult?.error || "Failed to save portfolio.");
+      }
+
       if (typeof window !== "undefined") {
         window.sessionStorage.setItem("dropfolio.rawData", JSON.stringify(rawData));
         window.sessionStorage.setItem(
           "dropfolio.aiPolishedData",
           JSON.stringify(result.data.polishedData)
+        );
+        window.sessionStorage.setItem(
+          "dropfolio.portfolioMeta",
+          JSON.stringify({
+            id: saveResult.data.id,
+            slug: saveResult.data.slug,
+            status: saveResult.data.status,
+          })
         );
       }
 

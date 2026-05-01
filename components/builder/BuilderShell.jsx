@@ -53,12 +53,18 @@ const initialFormData = {
   customLinkUrl: "",
 };
 
+function buildRawPayload(formData) {
+  const { photo, photoPreview, ...serializableData } = formData;
+  return serializableData;
+}
+
 export function BuilderShell() {
   const { user } = useUser();
   const router = useRouter();
 
   const [currentStep, setCurrentStep] = useState(1);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState("");
   const [formData, setFormData] = useState(initialFormData);
 
   const updateFormData = useCallback((updates) => {
@@ -78,10 +84,37 @@ export function BuilderShell() {
   };
 
   const handleSubmit = async () => {
+    setSubmitError("");
     setIsSubmitting(true);
-    await new Promise((resolve) => setTimeout(resolve, 2000));
-    console.log("DropFolio formData:", formData);
-    router.push("/preview");
+
+    try {
+      const rawData = buildRawPayload(formData);
+
+      const response = await fetch("/api/ai/polish", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ rawData }),
+      });
+
+      const result = await response.json();
+
+      if (!response.ok || !result?.ok) {
+        throw new Error(result?.error || "Failed to polish portfolio data.");
+      }
+
+      if (typeof window !== "undefined") {
+        window.sessionStorage.setItem("dropfolio.rawData", JSON.stringify(rawData));
+        window.sessionStorage.setItem(
+          "dropfolio.aiPolishedData",
+          JSON.stringify(result.data.polishedData)
+        );
+      }
+
+      router.push("/preview");
+    } catch (error) {
+      setSubmitError(error.message || "Failed to generate portfolio. Please try again.");
+      setIsSubmitting(false);
+    }
   };
 
   const stepComponents = {
@@ -155,6 +188,7 @@ export function BuilderShell() {
           )}
         </div>
       </div>
+      {submitError && <p className="mt-4 text-sm text-red-400">{submitError}</p>}
     </div>
   );
 }

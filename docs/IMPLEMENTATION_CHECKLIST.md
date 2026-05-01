@@ -9,7 +9,7 @@ Tracking list derived from the masterplan build order.
 - [x] Build landing page (`/`)
 - [x] Build portfolio builder flow (`/build`, 6 steps)
 - [x] Add Cloudinary photo upload flow
-- [ ] Add AI polishing pipeline through `lib/claude.js`
+- [x] Add AI polishing pipeline through `lib/claude.js`
 - [ ] Persist raw + polished data to MongoDB
 - [ ] Build public portfolio route (`/p/[slug]`) as server component
 - [ ] Build dashboard with stats and resume actions
